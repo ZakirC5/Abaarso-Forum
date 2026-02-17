@@ -12,13 +12,11 @@ const firebaseConfig = {
   measurementId: "G-CDEFDZ1SEW"
 };
 
-self.FIREBASE_APPCHECK_DEBUG_TOKEN = "B852C1C9-8D7D-4B9F-910D-198D51B2839A";
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider("B852C1C9-8D7D-4B9F-910D-198D51B2839A"),
+  provider: new ReCaptchaV3Provider("6Ledom4sAAAAAAFPz2vO16310SjInzobJQXhxVYM"),
   isTokenAutoRefreshEnabled: true
 });
 

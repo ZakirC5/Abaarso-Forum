@@ -1,0 +1,120 @@
+/* Header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* Logo */
+#logo {
+  height: 40px;
+  border-radius: 20px;
+  box-shadow: 10px 5px 10px gray;
+  transition: 0.5s;
+}
+
+#logo:hover {
+  border-radius: 15px;
+  box-shadow: 10px 5px 10px rgb(52,52,52);
+  transition: 0.5s;
+}
+
+/* Searchbar */
+.searchbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;           /* takes available space */
+  max-width: 400px;  /* caps width */
+  margin: 0 1rem;    /* space around */
+}
+
+.searchbar input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.searchbar input:hover {
+  color: black;
+  background-color: whitesmoke;
+  transition: 0.7s;
+}
+
+/* Login button */
+#login-btn {
+  flex-shrink: 0; /* prevents button from shrinking */
+  border: none;
+  background: #4a63ee;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0.5rem 1rem; /* ensures some size */
+  transition: 0.5s;
+}
+
+#login-btn:hover {
+  background-color: lightskyblue;
+  color: black;
+  transition: 0.5s;
+}
+
+/* Responsive: stack search and button on small screens */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 0.5rem 1rem;
+  }
+
+  .searchbar {
+    max-width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  #login-btn {
+    width: 100%;
+  }
+}
+
+.search-results {
+    position: absolute;
+    background: white;
+    margin-top: 180px;
+    right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 400px;
+    max-height: 180px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+    padding: 5px 0;
+}
+
+.search-results li {
+    list-style: none;
+    padding: 8px 12px;
+}
+
+.search-results li:hover {
+    background: #f0f0f0;
+}
+
+.search-results a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}

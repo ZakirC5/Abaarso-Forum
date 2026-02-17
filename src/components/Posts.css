@@ -1,0 +1,133 @@
+.posts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 20px;
+  justify-content: center; /* center cards on larger screens */
+}
+
+/* Empty state */
+.posts-empty {
+  font-size: 18px;
+  color: #666;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Individual post card */
+.post-card {
+  background: #fff;
+  border-radius: 16px;
+  width: 280px; /* slightly bigger */
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+}
+
+/* Post image */
+.post-image {
+  width: 100%;
+  height: 180px; /* taller image */
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.post-card:hover .post-image {
+  transform: scale(1.03);
+}
+
+/* Content */
+.post-content {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-title {
+  font-size: 19px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.post-title a {
+  font-size: 19px;
+  text-decoration: none;
+  color: #111;
+  transition: color 0.2s;
+}
+
+.post-title a:hover {
+  color: #4255ff;
+}
+
+.post-subtitle {
+  margin: 8px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Tags */
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.post-tag {
+  background: #eef1ff;
+  color: #4255ff;
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+}
+
+/* Post actions (edit, delete, like, bookmark) */
+.post-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.icon-btn {
+  background: #f0f2fa;
+  border: none;
+  border-radius: 8px;
+  padding: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn img {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-btn:hover {
+  background: #e0e5ff;
+  transform: scale(1.1);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .post-card {
+    width: 45%;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-card {
+    width: 100%;
+  }
+}

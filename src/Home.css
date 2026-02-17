@@ -1,0 +1,105 @@
+/* Container for all cards */
+.cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center cards horizontally */
+  justify-content: center; /* optional: center vertically if needed */
+  gap: 40px;
+  padding: 2rem 1rem;
+  width: 100%;
+  min-height: 100vh; /* optional: full viewport height */
+  box-sizing: border-box;
+}
+
+/* Card layout */
+.card {
+  width: 80%;
+  max-width: 1000px;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1e1e1e;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  padding: 2rem;
+  gap: 2rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-sizing: border-box;
+}
+
+/* Default layout for smaller screens */
+.card > div {
+  flex: 1;
+}
+
+/* Image container */
+#leftside-image, #rightside-image {
+  width: 300px;   /* fixed box size */
+  height: 300px;  /* fixed box size */
+  border-radius: 20px;
+  overflow: hidden; /* important: crop overflowing parts */
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+/* Actual image inside the container */
+#leftside-image img, #rightside-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* this makes the image fully cover the box */
+  display: block;    /* removes extra space under image */
+}
+
+/* Content styling */
+#leftside-content, #rightside-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+#leftside-content h2, #rightside-content h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+#leftside-content p, #rightside-content p {
+  font-size: 1.1rem;
+  color: #ddd;
+  line-height: 1.6;
+}
+
+/* Hover effect */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+}
+
+/* Responsive tweaks */
+@media (max-width: 1024px) {
+  .card {
+    flex-direction: column;
+    height: auto;
+  }
+
+  #leftside-image, #rightside-image {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  #leftside-image, #rightside-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  #leftside-content h2, #rightside-content h2 {
+    font-size: 1.5rem;
+  }
+
+  #leftside-content p, #rightside-content p {
+    font-size: 1rem;
+  }
+}

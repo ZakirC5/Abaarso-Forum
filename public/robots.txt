@@ -1,0 +1,6 @@
+# Public pages (crawlable)
+User-agent: *
+Allow: /*
+
+# Sitemap
+Sitemap: https://abaarsoforum.web.app/sitemap.xml

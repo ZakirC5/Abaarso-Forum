@@ -162,66 +162,68 @@ function ViewPost() {
     <>
       <Header />
       <SideBar />
-      <div className="view-container">
-        <div className="view-card">
-          {post.image && <img src={post.image} alt={post.title} className="view-image" />}
-          <h1 className="view-title">{post.title}</h1>
-          {post.subtitle && <h3 className="view-subtitle">{post.subtitle}</h3>}
+      <main>
+        <div className="view-container">
+          <div className="view-card">
+            {post.image && <img src={post.image} alt={post.title} className="view-image" />}
+            <h1 className="view-title">{post.title}</h1>
+            {post.subtitle && <h3 className="view-subtitle">{post.subtitle}</h3>}
 
-          <div className="view-tags">
-            {post.tags?.map((tag, idx) => (
-              <span key={idx} className="view-tag">#{tag}</span>
-            ))}
-          </div>
-
-          <p className="view-body">{post.body}</p>
-
-          <div className="view-actions">
-            <button className="icon-btn" onClick={toggleLike}>
-              <img src={userLiked ? likeFilledIcon : likeEmptyIcon} alt="Like" />
-              {post.likesCount > 0 && <span>{post.likesCount}</span>}
-            </button>
-            <button className="icon-btn" onClick={toggleBookmark}>
-              <img src={userBookmarked ? bookmarkIcon : bookmarkEmptyIcon} alt="Bookmark" />
-            </button>
-          </div>
-
-          {/* Comments */}
-          <div className="comments-section">
-            <h3>Comments</h3>
-            <div className="comment-input">
-              <input
-                type="text"
-                placeholder="Add a comment..."
-                value={commentMsg}
-                onChange={e => setCommentMsg(e.target.value)}
-              />
-              <button onClick={addComment}>Send</button>
+            <div className="view-tags">
+              {post.tags?.map((tag, idx) => (
+                <span key={idx} className="view-tag">#{tag}</span>
+              ))}
             </div>
 
-            <div className="comments-list">
-              {comments.length === 0 && <p>No comments yet…</p>}
-              {comments.map(c => {
-                const liked = c.likes?.includes(currentUser?.uid);
-                return (
-                  <div key={c.id} className="comment-item">
-                    <strong>{c.authorName}</strong>: {c.message}
-                    <div className="comment-actions">
-                      <button
-                        className="icon-btn"
-                        onClick={() => toggleCommentLike(c.id, liked)}
-                      >
-                        <img src={liked ? likeFilledIcon : likeEmptyIcon} alt="Like" />
-                        {c.likesCount > 0 && <span>{c.likesCount}</span>}
-                      </button>
+            <p className="view-body">{post.body}</p>
+
+            <div className="view-actions">
+              <button className="icon-btn" onClick={toggleLike}>
+                <img src={userLiked ? likeFilledIcon : likeEmptyIcon} alt="Like" />
+                {post.likesCount > 0 && <span>{post.likesCount}</span>}
+              </button>
+              <button className="icon-btn" onClick={toggleBookmark}>
+                <img src={userBookmarked ? bookmarkIcon : bookmarkEmptyIcon} alt="Bookmark" />
+              </button>
+            </div>
+
+            {/* Comments */}
+            <div className="comments-section">
+              <h3>Comments</h3>
+              <div className="comment-input">
+                <input
+                  type="text"
+                  placeholder="Add a comment..."
+                  value={commentMsg}
+                  onChange={e => setCommentMsg(e.target.value)}
+                />
+                <button onClick={addComment}>Send</button>
+              </div>
+
+              <div className="comments-list">
+                {comments.length === 0 && <p>No comments yet…</p>}
+                {comments.map(c => {
+                  const liked = c.likes?.includes(currentUser?.uid);
+                  return (
+                    <div key={c.id} className="comment-item">
+                      <strong>{c.authorName}</strong>: {c.message}
+                      <div className="comment-actions">
+                        <button
+                          className="icon-btn"
+                          onClick={() => toggleCommentLike(c.id, liked)}
+                        >
+                          <img src={liked ? likeFilledIcon : likeEmptyIcon} alt="Like" />
+                          {c.likesCount > 0 && <span>{c.likesCount}</span>}
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
     </>
   );
 }

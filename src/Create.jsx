@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { getAI, getGenerativeModel, GoogleAIBackend } from "firebase/ai";
@@ -6,7 +6,7 @@ import app from "./firebase.js";
 import "./Create.css";
 import SideBar from "./components/SideBar";
 import Header from "./components/Header";
-
+import GeminiLogo from "./assets/gemini-logo.webp"
 const ai = getAI(app, { backend: new GoogleAIBackend() });
 const model = getGenerativeModel(ai, { model: "gemini-2.5-flash" });
 
@@ -20,7 +20,6 @@ function Create() {
 
   const [aiPopupOpen, setAiPopupOpen] = useState(false);
   const [aiPrompt, setAiPrompt] = useState("");
-  const [aiOutput, setAiOutput] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
 
   const db = getFirestore();
@@ -32,6 +31,7 @@ function Create() {
       setStatus("You must be logged in to post.");
       return;
     }
+
     if (!title.trim()) {
       setStatus("Title is required.");
       return;
@@ -42,7 +42,7 @@ function Create() {
         userId: user.uid,
         title,
         subtitle,
-        tags: tags.split(",").map(t => t.trim()).filter(t => t.length > 0),
+        tags: tags.split(",").map(t => t.trim()).filter(Boolean),
         body,
         image,
         createdAt: serverTimestamp()
@@ -55,21 +55,55 @@ function Create() {
       setImage("");
       setBody("");
     } catch (e) {
+      console.error(e);
       setStatus("Error creating post.");
     }
   };
 
   const generateAI = async () => {
     if (!aiPrompt.trim()) return;
+
     setAiLoading(true);
-    setAiOutput("Generating...");
 
     try {
-      const response = await model.generateContent(aiPrompt);
-      setAiOutput(response.response.text);
+      const structuredPrompt = `
+Return the response EXACTLY in this format:
+
+TITLE: <title>
+SUBTITLE: <subtitle>
+TAGS: <comma separated tags>
+BODY: <main content>
+
+Topic:
+${aiPrompt}
+      `.trim();
+
+      const response = await model.generateContent(structuredPrompt);
+
+      let text = "";
+      if (response?.response?.text) {
+        text =
+          typeof response.response.text === "function"
+            ? response.response.text()
+            : response.response.text;
+      }
+
+      if (!text || typeof text !== "string") return;
+
+      const titleMatch = text.match(/^TITLE:\s*(.+)$/m);
+      const subtitleMatch = text.match(/^SUBTITLE:\s*(.+)$/m);
+      const tagsMatch = text.match(/^TAGS:\s*(.+)$/m);
+      const bodyMatch = text.match(/^BODY:\s*([\s\S]*)$/m);
+
+      if (titleMatch) setTitle(titleMatch[1].trim());
+      if (subtitleMatch) setSubtitle(subtitleMatch[1].trim());
+      if (tagsMatch) setTags(tagsMatch[1].trim());
+      if (bodyMatch) setBody(bodyMatch[1].trim());
+
+      setAiPopupOpen(false);
+
     } catch (err) {
-      console.error(err);
-      setAiOutput("Error generating AI text.");
+      console.error("AI Generation Error:", err);
     } finally {
       setAiLoading(false);
     }
@@ -79,86 +113,99 @@ function Create() {
     <>
       <Header />
       <SideBar />
+      <main>
+        <div className="create-container">
+          <div className="create-card">
+            <h2>Create New Post</h2>
 
-      <div className="create-container">
-        <div className="create-card">
-          <h2>Create New Post</h2>
-
-          {/* AI Icon */}
-          <abbr title="Create with Gemini">
-            <img
-                src="https://static.vecteezy.com/system/resources/previews/055/687/065/non_2x/gemini-google-icon-symbol-logo-free-png.png"
+            <abbr title="Create with Gemini">
+              <img
+                src={GeminiLogo}
                 alt="AI"
                 className="ai-icon"
                 onClick={() => setAiPopupOpen(true)}
+              />
+            </abbr>
+
+            <input
+              className="create-input"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
-          </abbr> 
 
-          <input
-            className="create-input"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <input
-            className="create-input"
-            placeholder="Subtitle"
-            value={subtitle}
-            onChange={(e) => setSubtitle(e.target.value)}
-          />
-          <input
-            className="create-input"
-            placeholder="Image URL"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-          />
-          <input
-            className="create-input"
-            placeholder="Tags (comma separated)"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
-          />
-          <textarea
-            className="create-textarea"
-            placeholder="Write your post body..."
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          />
+            <input
+              className="create-input"
+              placeholder="Subtitle"
+              value={subtitle}
+              onChange={(e) => setSubtitle(e.target.value)}
+            />
 
-          <button className="create-btn" onClick={submit}>
-            Publish Post
-          </button>
+            <input
+              className="create-input"
+              placeholder="Image URL"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+            />
 
-          {status && <p className="create-status">{status}</p>}
-        </div>
-      </div>
+            <input
+              className="create-input"
+              placeholder="Tags (comma separated)"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+            />
 
-      {/* AI Popup */}
-      {aiPopupOpen && (
-        <div className="ai-popup-backdrop" onClick={() => setAiPopupOpen(false)}>
-          <div className="ai-popup" onClick={(e) => e.stopPropagation()}>
-            <h3>AI Assistant</h3>
             <textarea
-              className="ai-prompt"
-              placeholder="Enter prompt here..."
-              value={aiPrompt}
-              onChange={(e) => setAiPrompt(e.target.value)}
+              className="create-textarea"
+              placeholder="Write your post body..."
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
             />
-            <button className="create-btn" onClick={generateAI} disabled={aiLoading}>
-              {aiLoading ? "Generating..." : "Generate"}
+
+            <button className="create-btn" onClick={submit}>
+              Publish Post
             </button>
-            <textarea
-              className="ai-output"
-              placeholder="AI output will appear here..."
-              value={aiOutput}
-              readOnly
-            />
-            <button className="create-btn" onClick={() => setAiPopupOpen(false)}>
-              Close
-            </button>
+
+            {status && <p className="create-status">{status}</p>}
           </div>
         </div>
-      )}
+
+        {aiPopupOpen && (
+          <div
+            className="ai-popup-backdrop"
+            onClick={() => !aiLoading && setAiPopupOpen(false)}
+          >
+            <div
+              className="ai-popup"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3>AI Assistant</h3>
+
+              <textarea
+                className="ai-prompt"
+                placeholder="Enter prompt here..."
+                value={aiPrompt}
+                onChange={(e) => setAiPrompt(e.target.value)}
+                disabled={aiLoading}
+              />
+
+              <button
+                className="create-btn"
+                onClick={generateAI}
+                disabled={aiLoading}
+              >
+                Generate
+              </button>
+
+              {aiLoading && (
+                <p style={{ marginTop: "10px" }}>
+                  Generating...
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+      </main>
     </>
   );
 }

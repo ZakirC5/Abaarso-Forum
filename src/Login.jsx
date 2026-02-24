@@ -155,99 +155,101 @@ function Login() {
   }
 
   return (
-    <div className="login-page">
-      <div className="login-box">
-        <h2>Sign in</h2>
-        <p className="login-subtext">abaarso accounts only</p>
+    <main>
+      <div className="login-page">
+        <div className="login-box">
+          <h2>Sign in</h2>
+          <p className="login-subtext">abaarso accounts only</p>
 
-        <button className="google-btn" onClick={signInWithGoogle}>
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            alt="Google"
-          />
-          <span>Continue with Google</span>
-        </button>
+          <button className="google-btn" onClick={signInWithGoogle}>
+            <img
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              alt="Google"
+            />
+            <span>Continue with Google</span>
+          </button>
 
-        {error && <div className="login-error">{error}</div>}
+          {error && <div className="login-error">{error}</div>}
 
-        {/* ---------------- Recover Section ---------------- */}
-        <button
-          className="recover-btn"
-          onClick={() => {
-            setShowRecover(!showRecover);
-            setRecoverMode("");
-            setRecoverStatus("");
-            setVerificationId("");
-          }}
-        >
-          Forgot Account?
-        </button>
+          {/* ---------------- Recover Section ---------------- */}
+          <button
+            className="recover-btn"
+            onClick={() => {
+              setShowRecover(!showRecover);
+              setRecoverMode("");
+              setRecoverStatus("");
+              setVerificationId("");
+            }}
+          >
+            Forgot Account?
+          </button>
 
-        {showRecover && (
-          <div className="recover-box">
-            {!recoverMode && (
-              <>
-                <button onClick={() => setRecoverMode("email")}>
-                  Recover with Email
-                </button>
+          {showRecover && (
+            <div className="recover-box">
+              {!recoverMode && (
+                <>
+                  <button onClick={() => setRecoverMode("email")}>
+                    Recover with Email
+                  </button>
 
-                <button onClick={() => setRecoverMode("phone")}>
-                  Recover with Phone
-                </button>
-              </>
-            )}
+                  <button onClick={() => setRecoverMode("phone")}>
+                    Recover with Phone
+                  </button>
+                </>
+              )}
 
-            {recoverMode === "email" && (
-              <>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={recoverEmail}
-                  onChange={(e) => setRecoverEmail(e.target.value)}
-                />
-                <button onClick={handleEmailRecovery}>
-                  Send Reset Email
-                </button>
-              </>
-            )}
+              {recoverMode === "email" && (
+                <>
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={recoverEmail}
+                    onChange={(e) => setRecoverEmail(e.target.value)}
+                  />
+                  <button onClick={handleEmailRecovery}>
+                    Send Reset Email
+                  </button>
+                </>
+              )}
 
-            {recoverMode === "phone" && (
-              <>
-                <input
-                  type="tel"
-                  placeholder="Enter phone number (+123...)"
-                  value={recoverPhone}
-                  onChange={(e) => setRecoverPhone(e.target.value)}
-                />
-                <button onClick={handlePhoneRecovery}>
-                  Send Verification Code
-                </button>
+              {recoverMode === "phone" && (
+                <>
+                  <input
+                    type="tel"
+                    placeholder="Enter phone number (+123...)"
+                    value={recoverPhone}
+                    onChange={(e) => setRecoverPhone(e.target.value)}
+                  />
+                  <button onClick={handlePhoneRecovery}>
+                    Send Verification Code
+                  </button>
 
-                {verificationId && (
-                  <>
-                    <input
-                      type="text"
-                      placeholder="Enter SMS code"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
-                    />
-                    <button onClick={verifyOtp}>
-                      Verify Code
-                    </button>
-                  </>
-                )}
+                  {verificationId && (
+                    <>
+                      <input
+                        type="text"
+                        placeholder="Enter SMS code"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                      />
+                      <button onClick={verifyOtp}>
+                        Verify Code
+                      </button>
+                    </>
+                  )}
 
-                <div id="recaptcha-container"></div>
-              </>
-            )}
+                  <div id="recaptcha-container"></div>
+                </>
+              )}
 
-            {recoverStatus && (
-              <div className="login-error">{recoverStatus}</div>
-            )}
-          </div>
-        )}
+              {recoverStatus && (
+                <div className="login-error">{recoverStatus}</div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
 

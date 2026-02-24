@@ -23,12 +23,14 @@ function Dashboard() {
       <Header />
       <SideBar />
 
-      <div className="dashboard-main">
-        <Suspense fallback={<div className="loader">Loading your feed…</div>}>
-            <h1>Welcome, {user.displayName}!</h1>
-            <Posts userId={user.uid}/>
-        </Suspense>
-      </div>
+      <main>
+        <div className="dashboard-main">
+          <Suspense fallback={<div className="loader">Loading your feed…</div>}>
+              <h1>Welcome, {user.displayName}!</h1>
+              <Posts userId={user.uid}/>
+          </Suspense>
+        </div>
+      </main>
     </div>
   );
 }

@@ -156,138 +156,139 @@ function Account() {
     <>
       <Header />
       <SideBar />
-
-      <div className="account-container">
-        <div className="account-card">
-          <img
-            className="account-profile"
-            src={
-              user.photoURL ||
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMY39csS26WQTGf0yIsPCWJFklLUt7AWFL7Q&s"
-            }
-            alt="Profile"
-          />
-
-          <h2>{user.displayName || "Anonymous User"}</h2>
-
-          <div className="account-info">
-            <p>
-              <strong>Email:</strong> {user.email}
-            </p>
-
-            <div className="account-row">
-              <span>
-                <strong>Password:</strong> {"•".repeat(10)}
-              </span>
-              <button
-                className="account-row-btn"
-                onClick={() => {
-                  setStatus("");
-                  setShowPasswordPopup(true);
-                }}
-              >
-                Change
-              </button>
-            </div>
-
-            <div className="account-row">
-              <span>
-                <strong>Phone number:</strong>{" "}
-                {userData.phone_number || "Not added"}
-              </span>
-              <button
-                className="account-row-btn"
-                onClick={() => {
-                  setStatus("");
-                  setShowPhoneNumberPopup(true);
-                }}
-              >
-                {userData.phone_number ? "Change" : "Add"}
-              </button>
-            </div>
-          </div>
-
-          <div className="account-description">
-            <h3>About Me</h3>
-            <textarea
-              value={descriptionEdit}
-              onChange={(e) => setDescriptionEdit(e.target.value)}
-              placeholder="Tell us about yourself..."
+      <main>
+        <div className="account-container">
+          <div className="account-card">
+            <img
+              className="account-profile"
+              src={
+                user.photoURL ||
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMY39csS26WQTGf0yIsPCWJFklLUt7AWFL7Q&s"
+              }
+              alt="Profile"
             />
-            <button className="description-save-btn" onClick={handleDescriptionSave}>
-              Save
-            </button>
-          </div>
 
-          <button className="account-logout-btn" onClick={handleLogout}>
-            Log Out
-          </button>
-        </div>
+            <h2>{user.displayName || "Anonymous User"}</h2>
 
-        {/* Password Popup */}
-        {showPasswordPopup && (
-          <div className="popup-overlay">
-            <div className="popup-card">
-              <h3>Change Password</h3>
+            <div className="account-info">
+              <p>
+                <strong>Email:</strong> {user.email}
+              </p>
 
-              <input
-                type="password"
-                placeholder="Current password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-              />
-
-              <input
-                type="password"
-                placeholder="New password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-
-              <input
-                type="password"
-                placeholder="Confirm new password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-
-              <div className="popup-buttons">
-                <button onClick={handlePasswordChange}>Save</button>
-                <button onClick={() => setShowPasswordPopup(false)}>Cancel</button>
-              </div>
-
-              {status && <p className="popup-status">{status}</p>}
-            </div>
-          </div>
-        )}
-
-        {/* Phone Number Popup */}
-        {showPhoneNumberPopup && (
-          <div className="popup-overlay">
-            <div className="popup-card">
-              <h3>
-                {userData.phone_number ? "Change Phone Number" : "Add Phone Number"}
-              </h3>
-
-              <input
-                type="tel"
-                placeholder="Enter phone number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-              />
-
-              <div className="popup-buttons">
-                <button onClick={handlePhoneNumberSave}>Save</button>
-                <button onClick={() => setShowPhoneNumberPopup(false)}>
-                  Cancel
+              <div className="account-row">
+                <span>
+                  <strong>Password:</strong> {"•".repeat(10)}
+                </span>
+                <button
+                  className="account-row-btn"
+                  onClick={() => {
+                    setStatus("");
+                    setShowPasswordPopup(true);
+                  }}
+                >
+                  Change
                 </button>
               </div>
 
-              {status && <p className="popup-status">{status}</p>}
+              <div className="account-row">
+                <span>
+                  <strong>Phone number:</strong>{" "}
+                  {userData.phone_number || "Not added"}
+                </span>
+                <button
+                  className="account-row-btn"
+                  onClick={() => {
+                    setStatus("");
+                    setShowPhoneNumberPopup(true);
+                  }}
+                >
+                  {userData.phone_number ? "Change" : "Add"}
+                </button>
+              </div>
             </div>
+
+            <div className="account-description">
+              <h3>About Me</h3>
+              <textarea
+                value={descriptionEdit}
+                onChange={(e) => setDescriptionEdit(e.target.value)}
+                placeholder="Tell us about yourself..."
+              />
+              <button className="description-save-btn" onClick={handleDescriptionSave}>
+                Save
+              </button>
+            </div>
+
+            <button className="account-logout-btn" onClick={handleLogout}>
+              Log Out
+            </button>
           </div>
-        )}
-      </div>
+
+          {/* Password Popup */}
+          {showPasswordPopup && (
+            <div className="popup-overlay">
+              <div className="popup-card">
+                <h3>Change Password</h3>
+
+                <input
+                  type="password"
+                  placeholder="Current password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                />
+
+                <input
+                  type="password"
+                  placeholder="New password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+
+                <input
+                  type="password"
+                  placeholder="Confirm new password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+
+                <div className="popup-buttons">
+                  <button onClick={handlePasswordChange}>Save</button>
+                  <button onClick={() => setShowPasswordPopup(false)}>Cancel</button>
+                </div>
+
+                {status && <p className="popup-status">{status}</p>}
+              </div>
+            </div>
+          )}
+
+          {/* Phone Number Popup */}
+          {showPhoneNumberPopup && (
+            <div className="popup-overlay">
+              <div className="popup-card">
+                <h3>
+                  {userData.phone_number ? "Change Phone Number" : "Add Phone Number"}
+                </h3>
+
+                <input
+                  type="tel"
+                  placeholder="Enter phone number"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+
+                <div className="popup-buttons">
+                  <button onClick={handlePhoneNumberSave}>Save</button>
+                  <button onClick={() => setShowPhoneNumberPopup(false)}>
+                    Cancel
+                  </button>
+                </div>
+
+                {status && <p className="popup-status">{status}</p>}
+              </div>
+            </div>
+          )}
+        </div>
+      </main>
     </>
   );
 }

@@ -73,53 +73,54 @@ function EditPost() {
     <>
       <Header />
       <SideBar />
+      <main>
+        <div className="create-container">
+          <div className="create-card">
+            <h2>Edit Post</h2>
 
-      <div className="create-container">
-        <div className="create-card">
-          <h2>Edit Post</h2>
+            <input
+              className="create-input"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
 
-          <input
-            className="create-input"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+            <input
+              className="create-input"
+              placeholder="Subtitle"
+              value={subtitle}
+              onChange={(e) => setSubtitle(e.target.value)}
+            />
 
-          <input
-            className="create-input"
-            placeholder="Subtitle"
-            value={subtitle}
-            onChange={(e) => setSubtitle(e.target.value)}
-          />
+            <input
+              className="create-input"
+              placeholder="Image URL"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+            />
 
-          <input
-            className="create-input"
-            placeholder="Image URL"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-          />
+            <input
+              className="create-input"
+              placeholder="Tags (comma separated)"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+            />
 
-          <input
-            className="create-input"
-            placeholder="Tags (comma separated)"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
-          />
+            <textarea
+              className="create-textarea"
+              placeholder="Write your post body..."
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+            />
 
-          <textarea
-            className="create-textarea"
-            placeholder="Write your post body..."
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          />
+            <button className="create-btn" onClick={handleUpdate}>
+              Save Changes
+            </button>
 
-          <button className="create-btn" onClick={handleUpdate}>
-            Save Changes
-          </button>
-
-          {status && <p className="create-status">{status}</p>}
+            {status && <p className="create-status">{status}</p>}
+          </div>
         </div>
-      </div>
+      </main>
     </>
   );
 }

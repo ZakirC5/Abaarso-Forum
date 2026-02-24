@@ -4,7 +4,7 @@ import { getFirestore, collection, getDocs, query, where, limit } from "firebase
 import app from '../firebase.js';
 import './Header.css';
 
-import logo from '../assets/logo.jpg';
+import logo from '../assets/logo.webp';
 import searchIcon from '../assets/search.svg';
 
 const auth = getAuth(app);

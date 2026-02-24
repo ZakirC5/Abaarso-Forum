@@ -85,3 +85,26 @@
   font-size: 0.9rem;
   text-align: center;
 }
+
+/* Recover account link */
+.recover-btn {
+  background: none;
+  border: none;
+  color: #4afcff;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 0.5rem;
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.recover-btn:hover {
+  color: #1defff;
+  transform: translateY(-1px);
+}
+
+.recover-btn:active {
+  transform: translateY(0);
+  color: #4afcff;
+}

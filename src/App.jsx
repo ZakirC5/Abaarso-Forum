@@ -11,7 +11,6 @@ const EditPost = lazy(() => import("./EditPost"));
 const ViewPost = lazy(() => import("./ViewPost"));
 const SavedPosts = lazy(() => import("./SavedPosts"));
 const Explore = lazy(() => import("./Explore"));
-const Settings = lazy(() => import("./Settings"));
 
 function App() {
   return (
@@ -27,7 +26,6 @@ function App() {
           <Route path="/edit/:id" element={<EditPost />} />
           <Route path="/view/:id" element={<ViewPost />} />
           <Route path="/saved" element={<SavedPosts />} />
-          <Route path="/settings" element={<Settings />} />
         </Routes>
       </Suspense>
     </Router>

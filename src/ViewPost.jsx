@@ -78,31 +78,46 @@ function ViewPost() {
   }, [db, id]);
 
   const toggleLike = async () => {
-    if (!currentUser) return alert("Login to like posts");
-    const postRef = doc(db, "posts", id);
+    if (!currentUser) return;
 
-    if (userLiked) {
-      await updateDoc(postRef, {
-        likes: arrayRemove(currentUser.uid),
-        likesCount: (post.likesCount || 1) - 1,
-      });
-      setUserLiked(false);
-      setPost(prev => ({
+    const isLiking = !userLiked; // Current intent: Are we adding a like or removing it?
+
+    // 1. Optimistic UI Update
+    // We use the length of the array to ensure the number is always tied to actual UIDs
+    setPost(prev => {
+      const newLikes = isLiking
+        ? [...(prev.likes || []), currentUser.uid]
+        : prev.likes?.filter(uid => uid !== currentUser.uid) || [];
+
+      return {
         ...prev,
-        likesCount: (prev.likesCount || 1) - 1,
-        likes: prev.likes?.filter(uid => uid !== currentUser.uid),
-      }));
-    } else {
-      await updateDoc(postRef, {
-        likes: arrayUnion(currentUser.uid),
-        likesCount: (post.likesCount || 0) + 1,
-      });
-      setUserLiked(true);
-      setPost(prev => ({
-        ...prev,
-        likesCount: (prev.likesCount || 0) + 1,
-        likes: [...(prev.likes || []), currentUser.uid],
-      }));
+        likes: newLikes,
+        likesCount: newLikes.length, // Sync count directly to array length
+      };
+    });
+    setUserLiked(isLiking);
+
+    try {
+      const postDoc = await getDoc(postRef);
+      const postData = postDoc.data();
+      const alreadyInDb = postData.likes?.includes(currentUser.uid);
+
+      // 2. Defensive Database Update
+      // Only increment/decrement if the DB state doesn't match our new intent
+      if (isLiking && !alreadyInDb) {
+        await updateDoc(postRef, {
+          likes: arrayUnion(currentUser.uid),
+          likesCount: increment(1),
+        });
+      } else if (!isLiking && alreadyInDb) {
+        await updateDoc(postRef, {
+          likes: arrayRemove(currentUser.uid),
+          likesCount: increment(-1),
+        });
+      }
+    } catch (error) {
+      console.error("Sync error:", error);
+      // Rollback logic here...
     }
   };
 

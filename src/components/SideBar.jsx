@@ -14,8 +14,7 @@ function SideBar() {
     { label: "Explore", location: "/explore", icon: ExploreIcon },
     { label: "Create", location: "/create", icon: CreateNoteIcon },
     { label: "Saved", location: "/saved", icon: BookmarkIcon },
-    { label: "Account", location: "/account", icon: AccountIcon },
-    { label: "Settings", location: "/settings", icon: SettingsIcon },
+    { label: "Account", location: "/account", icon: AccountIcon }
   ];
 
   return (

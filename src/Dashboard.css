@@ -28,7 +28,7 @@ header {
   left: 0;
   width: 220px;
   height: calc(100vh - 70px);
-  background: #1e1f25;
+  /* background: #1e1f25; */
   padding: 20px;
   color: white;
   overflow-y: auto;

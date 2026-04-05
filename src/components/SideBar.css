@@ -1,7 +1,7 @@
 .sidebar {
   width: 220px;
   height: 100vh;
-  background: #1e1f25;
+  background: #CB4431;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
 }
 
 .sidebar-link:hover {
-  background: #2c2e36;
+  background: #ca5344;
 }
 
 .sidebar-icon {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import app from "../firebase"; // Ensure this exports 'app'
+import app from "./firebase"; // Ensure this exports 'app'
 import "./TermsOfService.css";
 
 // 1. Move these OUTSIDE the component function

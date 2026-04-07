@@ -1,0 +1,105 @@
+.tos-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85); /* Dark blur effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Always on top */
+  padding: 20px;
+}
+
+.tos-modal {
+  background: white;
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: modalPop 0.3s ease-out;
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.tos-header {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.tos-header h2 {
+  margin: 0;
+  color: #111;
+}
+
+.tos-brand {
+  color: #CB4431; /* Your sidebar color */
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.tos-body {
+  padding: 24px;
+  overflow-y: auto; /* Scrollable content */
+  color: #444;
+  line-height: 1.6;
+}
+
+.tos-body h3 {
+  color: #222;
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+
+.tos-body ul {
+  padding-left: 20px;
+}
+
+.tos-body li {
+  margin-bottom: 10px;
+}
+
+.tos-footer {
+  padding: 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.accept-btn {
+  background: #CB4431; /* Match your brand */
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.accept-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.accept-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}

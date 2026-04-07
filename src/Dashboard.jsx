@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import SideBar from "./components/SideBar";
 const Posts = lazy(() => import("./components/Posts"));
 import "./Dashboard.css";
+import TermsOfService from "./TermsOfService";
 
 function Dashboard() {
   const auth = getAuth();
@@ -22,6 +23,7 @@ function Dashboard() {
     <div className="dashboard-wrapper">
       <Header />
       <SideBar />
+      <TermsOfService />
 
       <main>
         <div className="dashboard-main">

@@ -63,6 +63,7 @@
   cursor: pointer;
   padding: 0.5rem 1rem; /* ensures some size */
   transition: 0.5s;
+  text-decoration: none;
 }
 
 #login-btn:hover {

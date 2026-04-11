@@ -31,6 +31,9 @@ function Dashboard() {
               <h1>Welcome, {user.displayName}!</h1>
               <Posts userId={user.uid}/>
           </Suspense>
+          <Suspense fallback={<div className="loader">Loading your bookmarked feed…</div>}>
+              <Posts userId={user.id} bookmark={true} />
+          </Suspense>
         </div>
       </main>
     </div>

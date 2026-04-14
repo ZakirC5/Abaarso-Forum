@@ -12,6 +12,8 @@ import {
   query,
   where,
   onSnapshot,
+  deleteDoc,
+  increment,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import app from "./firebase.js";
@@ -19,11 +21,11 @@ import Header from "./components/Header";
 import SideBar from "./components/SideBar";
 import "./ViewPost.css";
 
-// Icons
 const likeEmptyIcon = "https://www.svgrepo.com/show/489499/like.svg";
 const likeFilledIcon = "https://www.svgrepo.com/show/488268/like.svg";
 const bookmarkIcon = "https://www.svgrepo.com/show/525696/bookmark.svg";
 const bookmarkEmptyIcon = "https://www.svgrepo.com/show/524332/bookmark.svg";
+const deleteIcon = "https://www.svgrepo.com/show/499905/delete.svg";
 
 function ViewPost() {
   const { id } = useParams();
@@ -38,28 +40,23 @@ function ViewPost() {
   const auth = getAuth(app);
   const currentUser = auth.currentUser;
 
-  // Fetch post
   useEffect(() => {
     const fetchPost = async () => {
       if (!id) return;
       try {
-        const docRef = doc(db, "posts", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
+        const postRef = doc(db, "posts", id);
+        const snap = await getDoc(postRef);
+        if (snap.exists()) {
+          const data = snap.data();
           setPost(data);
           setUserLiked(currentUser ? data.likes?.includes(currentUser.uid) : false);
-
-          // Check bookmark
-          if (currentUser) {
-            const userSnap = await getDoc(doc(db, "users", currentUser.uid));
-            if (userSnap.exists()) {
-              setUserBookmarked(userSnap.data().bookmarks?.includes(id));
-            }
+        }
+        if (currentUser) {
+          const userSnap = await getDoc(doc(db, "users", currentUser.uid));
+          if (userSnap.exists()) {
+            setUserBookmarked(userSnap.data().bookmarks?.includes(id));
           }
         }
-      } catch (err) {
-        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -67,107 +64,68 @@ function ViewPost() {
     fetchPost();
   }, [db, id, currentUser]);
 
-  // Listen for comments
   useEffect(() => {
     const q = query(collection(db, "comments"), where("postId", "==", id));
-    const unsub = onSnapshot(q, snapshot => {
-      const list = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setComments(list);
+    const unsub = onSnapshot(q, (snapshot) => {
+      setComments(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
     });
     return () => unsub();
   }, [db, id]);
 
   const toggleLike = async () => {
-    if (!currentUser) return;
+    if (!currentUser || !post) return;
+    const postRef = doc(db, "posts", id);
+    const isLiking = !userLiked;
 
-    const isLiking = !userLiked; // Current intent: Are we adding a like or removing it?
-
-    // 1. Optimistic UI Update
-    // We use the length of the array to ensure the number is always tied to actual UIDs
-    setPost(prev => {
-      const newLikes = isLiking
+    setPost((prev) => {
+      const likes = isLiking
         ? [...(prev.likes || []), currentUser.uid]
-        : prev.likes?.filter(uid => uid !== currentUser.uid) || [];
-
-      return {
-        ...prev,
-        likes: newLikes,
-        likesCount: newLikes.length, // Sync count directly to array length
-      };
+        : (prev.likes || []).filter((uid) => uid !== currentUser.uid);
+      return { ...prev, likes, likesCount: likes.length };
     });
     setUserLiked(isLiking);
 
-    try {
-      const postDoc = await getDoc(postRef);
-      const postData = postDoc.data();
-      const alreadyInDb = postData.likes?.includes(currentUser.uid);
-
-      // 2. Defensive Database Update
-      // Only increment/decrement if the DB state doesn't match our new intent
-      if (isLiking && !alreadyInDb) {
-        await updateDoc(postRef, {
-          likes: arrayUnion(currentUser.uid),
-          likesCount: increment(1),
-        });
-      } else if (!isLiking && alreadyInDb) {
-        await updateDoc(postRef, {
-          likes: arrayRemove(currentUser.uid),
-          likesCount: increment(-1),
-        });
-      }
-    } catch (error) {
-      console.error("Sync error:", error);
-      // Rollback logic here...
-    }
+    await updateDoc(postRef, {
+      likes: isLiking ? arrayUnion(currentUser.uid) : arrayRemove(currentUser.uid),
+      likesCount: increment(isLiking ? 1 : -1),
+    });
   };
 
   const toggleBookmark = async () => {
-    if (!currentUser) return alert("Login to bookmark posts");
+    if (!currentUser) return;
     const userRef = doc(db, "users", currentUser.uid);
-
-    if (userBookmarked) {
-      await updateDoc(userRef, { bookmarks: arrayRemove(id) });
-      setUserBookmarked(false);
-    } else {
-      await updateDoc(userRef, { bookmarks: arrayUnion(id) });
-      setUserBookmarked(true);
-    }
+    await updateDoc(userRef, {
+      bookmarks: userBookmarked ? arrayRemove(id) : arrayUnion(id),
+    });
+    setUserBookmarked(!userBookmarked);
   };
 
   const addComment = async () => {
-    if (!currentUser) return alert("Login to comment");
-    if (!commentMsg.trim()) return;
-
-    try {
-      await addDoc(collection(db, "comments"), {
-        postId: id,
-        userId: currentUser.uid,
-        authorName: currentUser.displayName || "Anonymous",
-        message: commentMsg,
-        likes: [],
-        likesCount: 0,
-        createdAt: new Date(),
-      });
-      setCommentMsg("");
-    } catch (err) {
-      console.error(err);
-    }
+    if (!currentUser || !commentMsg.trim()) return;
+    await addDoc(collection(db, "comments"), {
+      postId: id,
+      userId: currentUser.uid,
+      authorName: currentUser.displayName || "Anonymous",
+      message: commentMsg,
+      likes: [],
+      likesCount: 0,
+      createdAt: new Date(),
+    });
+    setCommentMsg("");
   };
 
   const toggleCommentLike = async (commentId, liked) => {
     if (!currentUser) return;
     const commentRef = doc(db, "comments", commentId);
-    if (liked) {
-      await updateDoc(commentRef, {
-        likes: arrayRemove(currentUser.uid),
-        likesCount: arrayRemove(1),
-      });
-    } else {
-      await updateDoc(commentRef, {
-        likes: arrayUnion(currentUser.uid),
-        likesCount: arrayUnion(1),
-      });
-    }
+    await updateDoc(commentRef, {
+      likes: liked ? arrayRemove(currentUser.uid) : arrayUnion(currentUser.uid),
+      likesCount: increment(liked ? -1 : 1),
+    });
+  };
+
+  const deleteCommentById = async (commentId) => {
+    if (!currentUser) return;
+    await deleteDoc(doc(db, "comments", commentId));
   };
 
   if (loading) return <div className="view-loading">Loading post...</div>;
@@ -183,13 +141,11 @@ function ViewPost() {
             {post.image && <img src={post.image} alt={post.title} className="view-image" />}
             <h1 className="view-title">{post.title}</h1>
             {post.subtitle && <h3 className="view-subtitle">{post.subtitle}</h3>}
-
             <div className="view-tags">
               {post.tags?.map((tag, idx) => (
                 <span key={idx} className="view-tag">#{tag}</span>
               ))}
             </div>
-
             <p className="view-body">{post.body}</p>
 
             <div className="view-actions">
@@ -202,7 +158,6 @@ function ViewPost() {
               </button>
             </div>
 
-            {/* Comments */}
             <div className="comments-section">
               <h3>Comments</h3>
               <div className="comment-input">
@@ -210,26 +165,29 @@ function ViewPost() {
                   type="text"
                   placeholder="Add a comment..."
                   value={commentMsg}
-                  onChange={e => setCommentMsg(e.target.value)}
+                  onChange={(e) => setCommentMsg(e.target.value)}
                 />
                 <button onClick={addComment}>Send</button>
               </div>
 
               <div className="comments-list">
-                {comments.length === 0 && <p>No comments yet…</p>}
-                {comments.map(c => {
+                {comments.length === 0 && <p>No comments yet...</p>}
+                {comments.map((c) => {
                   const liked = c.likes?.includes(currentUser?.uid);
+                  const isOwner = currentUser?.uid === c.userId;
                   return (
                     <div key={c.id} className="comment-item">
                       <strong>{c.authorName}</strong>: {c.message}
                       <div className="comment-actions">
-                        <button
-                          className="icon-btn"
-                          onClick={() => toggleCommentLike(c.id, liked)}
-                        >
+                        <button className="icon-btn" onClick={() => toggleCommentLike(c.id, liked)}>
                           <img src={liked ? likeFilledIcon : likeEmptyIcon} alt="Like" />
                           {c.likesCount > 0 && <span>{c.likesCount}</span>}
                         </button>
+                        {isOwner && (
+                          <button className="icon-btn" onClick={() => deleteCommentById(c.id)}>
+                            <img src={deleteIcon} alt="Delete" />
+                          </button>
+                        )}
                       </div>
                     </div>
                   );

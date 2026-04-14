@@ -88,7 +88,7 @@ function Posts({ bookmark = false, userId = null }) {
 
   return (
     <>
-      <h2 className="section-title">
+      <h2 className="section-title" style={{ marginLeft: '40px' }}>
         {bookmark ? "Saved Bookmarks" : userId ? "Your Posts" : "All Posts"}
       </h2>
       

@@ -170,43 +170,6 @@ function Account() {
 
             <h2>{user.displayName || "Anonymous User"}</h2>
 
-            <div className="account-info">
-              <p>
-                <strong>Email:</strong> {user.email}
-              </p>
-
-              <div className="account-row">
-                <span>
-                  <strong>Password:</strong> {"•".repeat(10)}
-                </span>
-                <button
-                  className="account-row-btn"
-                  onClick={() => {
-                    setStatus("");
-                    setShowPasswordPopup(true);
-                  }}
-                >
-                  Change
-                </button>
-              </div>
-
-              <div className="account-row">
-                <span>
-                  <strong>Phone number:</strong>{" "}
-                  {userData.phone_number || "Not added"}
-                </span>
-                <button
-                  className="account-row-btn"
-                  onClick={() => {
-                    setStatus("");
-                    setShowPhoneNumberPopup(true);
-                  }}
-                >
-                  {userData.phone_number ? "Change" : "Add"}
-                </button>
-              </div>
-            </div>
-
             <div className="account-description">
               <h3>About Me</h3>
               <textarea

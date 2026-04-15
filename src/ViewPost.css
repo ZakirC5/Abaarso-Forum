@@ -25,14 +25,39 @@
 
 .view-title {
   font-size: 28px;
-  margin: 10px 0;
+  margin: 10px 0 0;
 }
 
+/* AUTHOR SECTION */
+.post-author {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.author-pic {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #eee;
+}
+
+.author-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* SUBTITLE */
 .view-subtitle {
   font-size: 20px;
   color: #555;
 }
 
+/* TAGS */
 .view-tags {
   display: flex;
   gap: 10px;
@@ -46,11 +71,14 @@
   font-size: 14px;
 }
 
+/* BODY */
 .view-body {
   font-size: 16px;
   line-height: 1.6;
+  color: #222;
 }
 
+/* LOADING / ERROR */
 .view-loading,
 .view-error {
   margin-left: 220px;
@@ -58,6 +86,7 @@
   font-size: 18px;
 }
 
+/* ACTION BUTTONS */
 .view-actions {
   display: flex;
   gap: 15px;
@@ -75,7 +104,7 @@
   align-items: center;
   gap: 5px;
   transition: background 0.2s;
-  color: #000000;
+  color: #000;
 }
 
 .icon-btn:hover {
@@ -93,8 +122,8 @@
   color: #333;
 }
 
-/* Comments container */
-.comments-box {
+/* COMMENTS SECTION */
+.comments-section {
   margin-top: 30px;
   padding: 15px;
   background: #f9f9fa;
@@ -102,14 +131,13 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-/* Comment section title */
-.comments-box h3 {
-  margin: 0 0 10px 0;
+.comments-section h3 {
+  margin: 0 0 10px;
   font-size: 18px;
   font-weight: 600;
 }
 
-/* Comment input area */
+/* INPUT */
 .comment-input {
   display: flex;
   gap: 10px;
@@ -118,10 +146,15 @@
 
 .comment-input input {
   flex: 1;
-  padding: 8px 12px;
+  padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 14px;
+  outline: none;
+}
+
+.comment-input input:focus {
+  border-color: #4255ff;
 }
 
 .comment-input button {
@@ -138,24 +171,27 @@
   background: #2f3ed1;
 }
 
-/* List of comments */
+/* COMMENTS LIST */
 .comments-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-/* Single comment card */
-.comment-card {
+/* COMMENT ITEM */
+.comment-item {
   background: white;
-  padding: 10px 12px;
+  padding: 12px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #222;
 }
 
-/* Comment actions (like & reply) */
+/* COMMENT ACTIONS */
 .comment-actions {
   display: flex;
   gap: 10px;
@@ -164,13 +200,8 @@
 
 .comment-actions .icon-btn {
   background: #f0f2fa;
-  border: none;
   border-radius: 6px;
   padding: 4px 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 4px;
   font-size: 12px;
 }
 
@@ -183,7 +214,7 @@
   background: #e0e5ff;
 }
 
-/* Replies */
+/* REPLIES */
 .replies-list {
   margin-top: 8px;
   padding-left: 15px;
@@ -193,10 +224,43 @@
   gap: 6px;
 }
 
-/* Single reply card */
 .reply-card {
   background: #f5f6fa;
   padding: 6px 10px;
   border-radius: 8px;
   font-size: 13px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .view-container {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .view-card {
+    padding: 20px;
+  }
+
+  .view-title {
+    font-size: 24px;
+  }
+
+  .post-author {
+    justify-content: flex-start;
+  }
+
+  .view-loading,
+  .view-error {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .comment-input {
+    flex-direction: column;
+  }
+
+  .comment-input button {
+    width: 100%;
+  }
 }

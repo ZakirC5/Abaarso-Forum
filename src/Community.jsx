@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 import app from "./firebase.js"; // you forgot this earlier
 import { Link } from "react-router-dom";
 import Header from "./components/Header";
 import "./Community.css";
+
+const db = getFirestore(app);
+
+const JoinCommunity = (communityId) => {
+  console.log("Joining community:", communityId);
+};
 
 const Community = () => {
   const [communities, setCommunities] = useState([]);
@@ -11,7 +17,7 @@ const Community = () => {
   useEffect(() => {
     const fetchCommunities = async () => {
       try {
-        const querySnapshot = await getDocs(collection(app, "communities"));
+        const querySnapshot = await getDocs(collection(db, "communities"));
         const data = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -61,7 +67,9 @@ const Community = () => {
                 </div>
               </div>
 
-              <button className="join-btn">JOIN</button>
+              <button className="join-btn" onClick={() => JoinCommunity(community.id)}>
+                JOIN
+              </button>
             </div>
           </div>
         ))}

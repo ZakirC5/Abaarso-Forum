@@ -20,6 +20,8 @@ function Create() {
   const [communityId, setCommunityId] = useState("");
   const [communities, setCommunities] = useState([]);
 
+  const [aiPrompt, setAiPrompt] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
   const db = getFirestore();
   const auth = getAuth();
 

@@ -10,7 +10,7 @@ import "./Posts.css";
 const likeEmptyIcon = "https://www.svgrepo.com/show/489499/like.svg";
 const likeFilledIcon = "https://www.svgrepo.com/show/488268/like.svg";
 
-function Posts({ bookmark = false, userId = null }) {
+function Posts({ bookmark = false, userId = null, communityId = null }) {
   const db = getFirestore(app);
   const auth = getAuth(app);
   const [posts, setPosts] = useState([]);
@@ -39,6 +39,10 @@ function Posts({ bookmark = false, userId = null }) {
       q = query(q, where("userId", "==", userId));
     }
 
+    if (communityId) {
+      q = query(q, where("communityId", "==", communityId));
+    }
+
     const unsub = onSnapshot(q, (snapshot) => {
       let list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
@@ -50,7 +54,7 @@ function Posts({ bookmark = false, userId = null }) {
     });
 
     return () => unsub();
-  }, [db, bookmark, userBookmarks, userId]);
+  }, [db, bookmark, userBookmarks, userId, communityId]);
 
   // 3. Handle Delete
   const handleDelete = async (id) => {
@@ -97,7 +101,7 @@ function Posts({ bookmark = false, userId = null }) {
   return (
     <>
       <h2 className="section-title" style={{ marginLeft: '40px' }}>
-        {bookmark ? "Saved Bookmarks" : userId ? "Your Posts" : "All Posts"}
+        {bookmark ? "Saved Bookmarks" : userId ? "Your Posts" : communityId ? "Community Posts" : "All Posts"}
       </h2>
       
       <div className="posts-container">

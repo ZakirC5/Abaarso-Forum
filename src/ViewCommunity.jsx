@@ -15,6 +15,7 @@ import { useParams } from "react-router-dom";
 import app from "./firebase";
 import Header from "./components/Header";
 import "./ViewCommunity.css";
+import Posts from "./components/Posts";
 
 const db = getFirestore(app);
 const auth = getAuth(app);
@@ -114,18 +115,7 @@ const ViewCommunity = () => {
           )}
         </div>
 
-        <div className="posts-section">
-          {posts.length === 0 ? (
-            <p className="not-found-text">No posts yet</p>
-          ) : (
-            posts.map((post) => (
-              <div key={post.id} className="post-card">
-                <div className="post-title">{post.title}</div>
-                <div className="post-content">{post.content}</div>
-              </div>
-            ))
-          )}
-        </div>
+        <Posts communityId={id} />
       </div>
     </div>
   );

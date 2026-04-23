@@ -1,0 +1,126 @@
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.post-card {
+  background: #fff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 800px;
+  display: flex; /* Horizontal row */
+  flex-direction: row; 
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border: 1px solid #eee;
+  transition: transform 0.2s;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* LEFT SIDE: Content */
+.post-content {
+  flex: 1; /* This makes the text fill all available space */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.post-title {
+  margin: 0 0 5px 0;
+  font-size: 20px;
+}
+
+.post-title a {
+  text-decoration: none;
+  color: #222;
+  font-weight: 700;
+}
+
+.post-subtitle {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.post-tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.post-tag {
+  font-size: 12px;
+  color: #4255ff;
+  background: #f0f2ff;
+  padding: 3px 10px;
+  border-radius: 5px;
+}
+
+.post-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+  /* Ensure the container doesn't stretch vertically */
+  align-items: center; 
+  justify-content: flex-start;
+}
+
+.icon-btn {
+  background: #f5f7fb;
+  border: none;
+  border-radius: 8px;
+  /* Fix the button size */
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; /* Remove padding that might push the image */
+  flex-shrink: 0; /* Prevent the button from getting squashed */
+  color: black;
+}
+
+.icon-btn img {
+  /* This is the most important part */
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
+/* RIGHT SIDE: Image */
+.post-image-container {
+  width: 250px; /* Fixed width for the image */
+  min-width: 250px;
+  height: auto;
+  background: #f9f9f9; /* Subtle background while loading */
+}
+
+.post-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* RESPONSIVE: Stack on small screens */
+@media (max-width: 600px) {
+  .post-card {
+    flex-direction: column-reverse; /* Text on top of image for mobile */
+  }
+
+  .post-image-container {
+    width: 100%;
+    height: 200px;
+  }
+}

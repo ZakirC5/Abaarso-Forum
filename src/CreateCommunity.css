@@ -1,0 +1,86 @@
+/* Page background */
+.create-community-page {
+  background: #ffffff;
+  min-height: 100vh;
+  color: #000000;
+}
+
+/* Centered container card */
+.create-community-container {
+  max-width: 520px;
+  margin: 60px auto;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Title */
+.create-community-container h2 {
+  margin-bottom: 18px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #000000;
+}
+
+/* Form spacing */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111111;
+}
+
+/* Inputs */
+.form-group input,
+.form-group textarea {
+  padding: 12px 12px;
+  border: 1px solid #d6d6d6;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  background: #fff;
+  color: #000;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #CB4431;
+  box-shadow: 0 0 0 3px rgba(203, 68, 49, 0.15);
+}
+
+/* Button */
+.create-btn {
+  width: 100%;
+  padding: 12px 14px;
+  background: #CB4431;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.create-btn:hover {
+  background: #b93c2c;
+  transform: translateY(-1px);
+}
+
+.create-btn:active {
+  transform: translateY(0);
+}
+
+.create-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}

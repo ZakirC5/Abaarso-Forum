@@ -1,0 +1,80 @@
+.create-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  width: 100%;
+  margin-left: 220px; /* sidebar width */
+  margin-top: 70px; /* header height */
+  box-sizing: border-box;
+}
+
+.create-card {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: "Inter", sans-serif;
+}
+
+.create-card h2 {
+  font-size: 26px;
+  margin-bottom: 15px;
+  color: #4b5fff;
+}
+
+.create-input {
+  padding: 12px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.create-input:focus {
+  border-color: #4b5fff;
+  box-shadow: 0 0 0 3px rgba(75, 95, 255, 0.2);
+}
+
+.create-textarea {
+  height: 150px;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  resize: vertical;
+  transition: 0.2s;
+}
+
+.create-textarea:focus {
+  border-color: #4b5fff;
+  box-shadow: 0 0 0 3px rgba(75, 95, 255, 0.2);
+}
+
+.create-btn {
+  padding: 12px;
+  background: #4b5fff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 10px;
+}
+
+.create-btn:hover {
+  background: #3b4ae3;
+}
+
+.create-status {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #444;
+  text-align: center;
+}

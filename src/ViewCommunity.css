@@ -1,0 +1,102 @@
+/* Page wrapper */
+.view-community-page {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #000000;
+  padding-top: 100px; /* prevents header overlap */
+}
+
+/* Content container */
+.view-community-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Card */
+.view-community-card {
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+/* Title */
+.view-community-title {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: #111111;
+}
+
+/* Description */
+.view-community-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #444444;
+  margin-bottom: 12px;
+}
+
+/* Members */
+.view-community-members {
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 18px;
+}
+
+/* Button */
+.join-btn {
+  background-color: #CB4431;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.join-btn:hover {
+  background-color: #b93c2c;
+  transform: translateY(-1px);
+}
+
+/* States */
+.loading-text,
+.not-found-text {
+  text-align: center;
+  margin-top: 80px;
+  font-size: 16px;
+  color: #666;
+}
+
+/* Posts section */
+.posts-section {
+  margin-top: 30px;
+}
+
+.post-card {
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 12px;
+  background: #fff;
+  transition: 0.2s ease;
+}
+
+.post-card:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.post-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.post-content {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.5;
+}

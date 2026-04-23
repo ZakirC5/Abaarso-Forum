@@ -1,0 +1,41 @@
+.explore-container {
+  padding: 80px 20px 20px 20px;
+}
+
+/* Go Back button */
+.go-back-btn {
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f0f2fa;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background 0.2s, transform 0.1s;
+  transition: 1s;
+}
+
+.go-back-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.go-back-btn span {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.go-back-btn:hover {
+  color: red;
+  background: #e0e5ff;
+  transform: scale(1.05);
+  transition: 1s;
+}
+
+/* Optional: make posts container flexible */
+.posts-container {
+  justify-content: flex-start; /* aligns posts to left */
+}

@@ -1,0 +1,125 @@
+/* Main container */
+.create-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  width: calc(100% - 220px); /* sidebar width */
+  margin-left: 220px; /* push content right for sidebar */
+  margin-top: 70px;   /* push content down for header */
+  min-height: calc(100vh - 70px);
+  box-sizing: border-box;
+}
+
+/* Card styling */
+.create-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: "Inter", sans-serif;
+}
+
+.create-card h2 {
+  color: black;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.create-input {
+  padding: 12px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.create-input:focus {
+  border-color: #4b5fff;
+  box-shadow: 0 0 0 3px rgba(75, 95, 255, 0.2);
+}
+
+.create-textarea {
+  height: 150px;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  resize: vertical;
+  transition: 0.2s;
+}
+
+.create-textarea:focus {
+  border-color: #4b5fff;
+  box-shadow: 0 0 0 3px rgba(75, 95, 255, 0.2);
+}
+
+.create-btn {
+  padding: 12px;
+  background: #4b5fff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.create-btn:hover {
+  background: #3b4ae3;
+}
+
+.create-status {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #444;
+}
+
+.ai-icon {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.ai-popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.ai-popup {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ai-prompt,
+.ai-output {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  resize: vertical;
+}

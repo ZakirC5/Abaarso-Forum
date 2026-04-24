@@ -10,7 +10,7 @@ import "./Posts.css";
 const likeEmptyIcon = "https://www.svgrepo.com/show/489499/like.svg";
 const likeFilledIcon = "https://www.svgrepo.com/show/488268/like.svg";
 
-function Posts({ bookmark = false, userId = null, communityId = null }) {
+function Posts({ bookmark = false, userId = null, communityId = null, popular = false }) {
   const db = getFirestore(app);
   const auth = getAuth(app);
   const [posts, setPosts] = useState([]);
@@ -98,17 +98,19 @@ function Posts({ bookmark = false, userId = null, communityId = null }) {
     );
   }
 
+  const popularPosts = [...posts].sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0)).slice(0, 5);
+
   return (
     <>
       <h2 className="section-title" style={{ marginLeft: '40px' }}>
-        {bookmark ? "Saved Bookmarks" : userId ? "Your Posts" : communityId ? "Community Posts" : "All Posts"}
+        {bookmark ? "Saved Bookmarks" : userId ? "Your Posts" : communityId ? "Community Posts" : popular ? "🔥 Popular Posts" : "All Posts"}
       </h2>
       
       <div className="posts-container">
         {posts.length === 0 ? (
           <p className="posts-empty">{bookmark ? "No saved posts yet…" : "No posts yet…"}</p>
         ) : (
-          posts.map((post) => {
+          (popular ? popularPosts : posts).map((post) => {
             const isOwner = currentUser && post.userId === currentUser.uid;
             const hasLiked = post.likes?.includes(currentUser?.uid);
 

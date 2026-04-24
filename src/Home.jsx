@@ -1,58 +1,37 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import {
   getFirestore,
   collection,
-  getDocs,
-  query,
-  orderBy,
-  where
-} from "firebase/firestore"
-import app from "./firebase.js"
-import Header from "./components/Header.jsx"
-import "./Home.css"
+  getDocs
+} from "firebase/firestore";
+import app from "./firebase.js";
+import Header from "./components/Header.jsx";
+import Posts from "./components/Posts.jsx"; // 🔥 NEW
+import "./Home.css";
 
 function Home() {
-  const db = getFirestore(app)
+  const db = getFirestore(app);
 
-  const [recent, setRecent] = useState([])
-  const [popular, setPopular] = useState([])
-  const [commentCounts, setCommentCounts] = useState({})
+  const [communities, setCommunities] = useState([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const q = query(collection(db, "posts"), orderBy("createdAt", "desc"))
-      const snapshot = await getDocs(q)
+    const fetchCommunities = async () => {
+      try {
+        const snap = await getDocs(collection(db, "communities"));
 
-      const data = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }))
+        const data = snap.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
 
-      setRecent(data.slice(0, 5))
-
-      const sorted = [...data].sort(
-        (a, b) => (b.likesCount || 0) - (a.likesCount || 0)
-      )
-      setPopular(sorted.slice(0, 5))
-
-      // 🔥 FETCH COMMENT COUNTS
-      const counts = {}
-
-      for (const post of data) {
-        const commentsQuery = query(
-          collection(db, "comments"),
-          where("postId", "==", post.id)
-        )
-
-        const commentSnap = await getDocs(commentsQuery)
-        counts[post.id] = commentSnap.size
+        setCommunities(data);
+      } catch (err) {
+        console.error(err);
       }
+    };
 
-      setCommentCounts(counts)
-    }
-
-    fetchPosts()
-  }, [])
+    fetchCommunities();
+  }, []);
 
   return (
     <>
@@ -67,61 +46,25 @@ function Home() {
 
         <div className="layout">
 
-          {/* LEFT */}
+          {/* LEFT (MAIN) */}
           <div className="main">
-            <h2 className="section-title">Recent Posts</h2>
-
-            {recent.map(post => {
-              const likes = post.likesCount || 0
-              const comments = commentCounts[post.id] || 0
-
-              return (
-                <div key={post.id} className="post-card">
-
-                  <div className="post-top">
-                    <h3>{post.title}</h3>
-                    <span className="post-time">
-                      {post.createdAt?.seconds
-                        ? new Date(post.createdAt.seconds * 1000).toLocaleDateString()
-                        : "recent"}
-                    </span>
-                  </div>
-
-                  <p className="subtitle">
-                    {post.subtitle || "No description provided."}
-                  </p>
-
-                  <div className="tags">
-                    {post.tags?.map((tag, i) => (
-                      <span key={i} className="tag">#{tag}</span>
-                    ))}
-                  </div>
-
-                  <div className="post-footer">
-                    <div className="stat">🔥 {likes}</div>
-                    <div className="stat">💬 {comments}</div>
-                  </div>
-
-                </div>
-              )
-            })}
+            {/* 🔥 USE YOUR POSTS COMPONENT */}
+            <Posts popular={true} />
           </div>
 
-          {/* RIGHT */}
+          {/* RIGHT (COMMUNITIES) */}
           <aside className="sidebar">
             <div className="sidebar-card">
-              <h3>🔥 Popular</h3>
+              <h3>Communities</h3>
 
-              {popular.map(post => {
-                const likes = post.likesCount || 0
-
-                return (
-                  <div key={post.id} className="mini-post">
-                    <p>{post.title}</p>
-                    <div className="mini-meta">🔥 {likes}</div>
+              {communities.map((community) => (
+                <div key={community.id} className="mini-post">
+                  <p>{community.name}</p>
+                  <div className="mini-meta">
+                    {community.members?.length || 0} members
                   </div>
-                )
-              })}
+                </div>
+              ))}
             </div>
           </aside>
 
@@ -129,7 +72,7 @@ function Home() {
 
       </main>
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;

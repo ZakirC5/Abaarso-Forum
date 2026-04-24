@@ -123,3 +123,64 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* SIDEBAR CARD (UPGRADED) */
+.sidebar-card {
+  background: white;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid #eee;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* SIDEBAR TITLE */
+.sidebar-card h3 {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* COMMUNITY ITEM */
+.mini-post {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 14px;
+  margin-top: 10px;
+
+  border-radius: 12px;
+  border: 1px solid transparent;
+
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* HOVER EFFECT (clean + modern) */
+.mini-post:hover {
+  background: #fff5f3;
+  border-color: #f1c7c2;
+  transform: translateX(4px);
+}
+
+/* COMMUNITY NAME */
+.mini-post p {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* MEMBERS BADGE */
+.mini-meta {
+  font-size: 0.75rem;
+  background: #ffe5e1;
+  color: #cb4431;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* OPTIONAL: add subtle divider between items */
+.mini-post + .mini-post {
+  border-top: 1px solid #f3f3f3;
+}

@@ -29,6 +29,10 @@ const hash = async (text) => {
     .join("");
 };
 
+const limitText = (text = "") => {
+  return text.length > 35 ? text.slice(0, 35) + "…" : text;
+};
+
 const Admin = () => {
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
@@ -190,7 +194,7 @@ const Admin = () => {
             <div key={c.id} className="admin-card">
               <div className="admin-info">
                 <h3>{c.name}</h3>
-                <p>{c.description}</p>
+                <p>{limitText(c.description)}</p>
               </div>
 
               <button
@@ -217,8 +221,8 @@ const Admin = () => {
             orphanPosts.map((p) => (
               <div key={p.id} className="admin-card">
                 <div className="admin-info">
-                  <h3>{p.title || "Untitled Post"}</h3>
-                  <p>{p.content}</p>
+                  <h3>{limitText(p.title || "Untitled Post")}</h3>
+                  <p>{limitText(p.content)}</p>
                 </div>
 
                 <button

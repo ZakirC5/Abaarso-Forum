@@ -90,6 +90,10 @@ function Posts({ bookmark = false, userId = null, communityId = null, popular = 
     if (container) container.style.display = 'none';
   };
 
+  const limitText = (text) => {
+    return text.length > 35 ? text.slice(0, 35) + "…" : text;
+  };
+
   const limitTags = (i, tag) => {
     const short_tags = (tag.length > 10) ? tag.slice(0, 15) + "…" : tag;
     if (i < 5)
@@ -119,9 +123,9 @@ function Posts({ bookmark = false, userId = null, communityId = null, popular = 
                 <div className="post-content">
                   <div className="post-header">
                     <h3 className="post-title">
-                      <a href={"/view/" + post.id}>{post.title}</a>
+                      <a href={"/view/" + post.id}>{limitText(post.title)}</a>
                     </h3>
-                    <p className="post-subtitle">{post.subtitle}</p>
+                    <p className="post-subtitle">{limitText(post.subtitle)}</p>
                   </div>
 
                   <div className="post-tags">

@@ -25,6 +25,7 @@ function SideBar() {
 
   const bottomItems = [
     { label: "Account", path: "/account", icon: AccountIcon },
+    { label: "Admin", path: "/admin", icon: SettingsIcon },
   ];
 
   // Auto-close sidebar on mobile when navigating

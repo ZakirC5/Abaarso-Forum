@@ -14,6 +14,7 @@ const Explore = lazy(() => import("./Explore"));
 const Community = lazy(() => import("./Community"));
 const CreateCommunity = lazy(() => import("./CreateCommunity"));
 const ViewCommunity = lazy(() => import("./ViewCommunity"));
+const Admin = lazy(() => import("./Admin"));
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/edit/:id" element={<EditPost />} />
           <Route path="/view/:id" element={<ViewPost />} />
           <Route path="/saved" element={<SavedPosts />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </Suspense>
     </Router>

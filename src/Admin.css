@@ -1,0 +1,154 @@
+/* PAGE WRAPPER */
+.admin-page {
+  background-color: #f7f7f8;
+  min-height: 100vh;
+  color: #111;
+}
+
+/* CONTAINER */
+.admin-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 120px 20px 40px;
+}
+
+/* TOP BAR */
+.admin-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.admin-topbar h1 {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+/* SECTION TITLE */
+.section-title {
+  font-size: 18px;
+  margin: 20px 0;
+  font-weight: 700;
+  color: #333;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  background: #111;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+/* LIST */
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* CARD */
+.admin-card {
+  background: #fff;
+  border: 1px solid #ececec;
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.2s ease;
+}
+
+.admin-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.admin-info h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.admin-info p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* DELETE BUTTON (your brand color) */
+.delete-btn {
+  background-color: #CB4431;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #b93c2c;
+  transform: translateY(-1px);
+}
+
+/* LOGIN PAGE */
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7f8;
+}
+
+.admin-login-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid #ececec;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.admin-login-card h2 {
+  margin-bottom: 20px;
+}
+
+.admin-login-card input {
+  width: 93%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+
+.admin-login-card input:focus {
+  border-color: #CB4431;
+}
+
+.admin-login-card button {
+  width: 100%;
+  padding: 10px;
+  background: #CB4431;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.admin-login-card button:hover {
+  background: #b93c2c;
+}

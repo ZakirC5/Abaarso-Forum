@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import {
   collection,
   getDocs,
+  getDoc,
   getFirestore,
   doc,
   updateDoc,
   arrayUnion,
+  deleteDoc,
 } from "firebase/firestore";
 import app from "./firebase.js";
 import { Link, useNavigate } from "react-router-dom";
@@ -69,7 +71,15 @@ const Community = () => {
 
     try {
       const communityRef = doc(db, "communities", communityId);
-      const communitySnap = await getDocs(communityRef);
+
+      // ✅ FIX: use getDoc for a single document
+      const communitySnap = await getDoc(communityRef);
+
+      if (!communitySnap.exists()) {
+        alert("Community not found");
+        return;
+      }
+
       const communityData = communitySnap.data();
 
       if (communityData.modId !== user.uid) {
@@ -77,14 +87,21 @@ const Community = () => {
         return;
       }
 
+      // ✅ confirmation prompt
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this community? This action cannot be undone."
+      );
+
+      if (!confirmDelete) return;
+
       await deleteDoc(communityRef);
 
       console.log("Deleted successfully");
     } catch (err) {
       console.error("Delete error:", err);
+      alert("Failed to delete community");
     }
-  };
-      
+  };  
 
   useEffect(() => {
     const fetchCommunities = async () => {

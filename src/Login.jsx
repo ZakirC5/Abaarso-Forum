@@ -20,7 +20,7 @@ import "./Login.css";
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const ALLOWED_DOMAINS = ["studentabaarso.org", "abaarso.org"];
+const ALLOWED_DOMAINS = ["studentabaarso.org", "abaarsoschool.org"];
 
 function Login() {
   const [error, setError] = useState("");
@@ -42,7 +42,7 @@ function Login() {
       if (!ALLOWED_DOMAINS.includes(domain)) {
         await signOut(auth);
         setError(
-          "Please sign in using your @studentabaarso.org or @abaarso.org email."
+          "Please sign in using your @studentabaarso.org or @abaarsoschool.org email."
         );
         return;
       }

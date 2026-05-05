@@ -163,6 +163,11 @@
   transform: translateX(4px);
 }
 
+.mini-post a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* COMMUNITY NAME */
 .mini-post p {
   font-weight: 600;

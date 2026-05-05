@@ -59,7 +59,9 @@ function Home() {
 
               {communities.map((community) => (
                 <div key={community.id} className="mini-post">
-                  <p>{community.name}</p>
+                  <a href="/community">
+                    <p>{community.name}</p>
+                  </a>
                   <div className="mini-meta">
                     {community.members?.length || 0} members
                   </div>

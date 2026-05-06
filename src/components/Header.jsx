@@ -139,7 +139,7 @@ function Header() {
 
       {/* Auth Button Logic from Code #2 */}
       <div className="header-actions">
-        {user && location.pathname === "/" ? (
+        {user && (location.pathname === "/" || location.pathname === "/community" || location.pathname === "/admin") ? (
           <a href="/dashboard" id="login-btn">
             Open Dashboard
           </a>

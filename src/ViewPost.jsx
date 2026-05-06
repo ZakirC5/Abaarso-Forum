@@ -228,8 +228,8 @@ function ViewPost() {
     return <div className="view-error">Post not found.</div>;
   }
 
-  const limitText = (text) => {
-    return text.length > 35 ? text.slice(0, 35) + "…" : text;
+  const limitText = (text, limit = 35) => {
+    return text.length > limit ? text.slice(0, limit) + "…" : text;
   };
 
   return (
@@ -374,9 +374,9 @@ function ViewPost() {
                       className="comment-item"
                     >
                       <strong>
-                        {limitText(comment.authorName)}:
+                        {comment.authorName}:
                       </strong>
-                      {limitText(comment.message)}
+                      {limitText(comment.message, 100000)}
 
                       <div className="comment-actions">
 
